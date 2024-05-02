@@ -1,9 +1,10 @@
 #!/usr/bin/python3
 """ Define function """
 
+
 def canUnlockAll(boxes):
     """
-    Determines if all the boxes can be opened 
+    Determines if all the boxes can be opened
 
     Args:
      boxes(list of lists of int): a list of lists.
@@ -26,7 +27,7 @@ def canUnlockAll(boxes):
                 queue.append(key)
     return all(unlocked)
 
-if __name__ == "__main__":
-    boxes = [0], [1], [2], []]
-    print(canUnlockAll(boxes))
 
+if __name__ == "__main__":
+    boxes = [[0], [1], [2], []]
+    print(canUnlockAll(boxes))
