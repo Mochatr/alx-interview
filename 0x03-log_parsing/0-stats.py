@@ -19,7 +19,8 @@ status_code_counts = {
 line_count = 0
 
 log_pattern = re.compile(
-    r'^\d{1,3}(\.\d{1,3}){3} - \[.*?\] "GET /projects/260 HTTP/1\.1" (\d{3}) (\d+)$'
+    r'^\d{1,3}(\.\d{1,3}){3} - \[.*?\] '
+    r'"GET /projects/260 HTTP/1\.1" (\d{3}) (\d+)$'
 )
 
 
