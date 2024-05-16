@@ -1,7 +1,8 @@
 #!/usr/bin/python3
+
+import re
 import sys
 import signal
-import re
 
 
 total_file_size = 0
@@ -17,7 +18,9 @@ status_code_counts = {
 }
 line_count = 0
 
-log_pattern = re.compile(r'^\d{1,3}(\.\d{1,3}){3} - \[.*?\] "GET /projects/260 HTTP/1\.1" (\d{3}) (\d+)$')
+log_pattern = re.compile(
+    r'^\d{1,3}(\.\d{1,3}){3} - \[.*?\] "GET /projects/260 HTTP/1\.1" (\d{3}) (\d+)$'
+)
 
 
 def print_statistics():
