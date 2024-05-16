@@ -41,21 +41,18 @@ def handle_interrupt(signum, frame):
 
 signal.signal(signal.SIGINT, handle_interrupt)
 
-try:
-    for line in sys.stdin:
-        match = log_pattern.match(line.strip())
-        if match:
-            status_code = int(match.group(2))
-            file_size = int(match.group(3))
+for line in sys.stdin:
+    match = log_pattern.match(line.strip())
+    if match:
+        status_code = int(match.group(2))
+        file_size = int(match.group(3))
 
-            total_file_size += file_size
-            if status_code in status_code_counts:
-                status_code_counts[status_code] += 1
+        total_file_size += file_size
+        if status_code in status_code_counts:
+            status_code_counts[status_code] += 1
 
             line_count += 1
             if line_count % 10 == 0:
                 print_statistics()
-except Exception as e:
-    print(f"Error: {e}", file=sys.stderr)
-finally:
-    print statistics()
+
+print statistics()
