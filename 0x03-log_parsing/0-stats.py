@@ -4,7 +4,7 @@ import re
 import sys
 import signal
 
-
+# Initialize metrics
 total_file_size = 0
 status_code_counts = {
         200: 0,
@@ -18,6 +18,7 @@ status_code_counts = {
 }
 line_count = 0
 
+# Regular expression pattern to match the log line format
 log_pattern = re.compile(
     r'^\d{1,3}(\.\d{1,3}){3} - \[.*?\] '
     r'"GET /projects/260 HTTP/1\.1" (\d{3}) (\d+)$'
@@ -39,9 +40,13 @@ def handle_interrupt(signum, frame):
     sys.exit(0)
 
 
+# Set up signal handler for keyboard interruption
 signal.signal(signal.SIGINT, handle_interrupt)
 
-for line in sys.stdin:
+
+def process_line(line):
+    """Process a single line of input"""
+    global total_file_size, line_count
     match = log_pattern.match(line.strip())
     if match:
         status_code = int(match.group(2))
@@ -51,8 +56,17 @@ for line in sys.stdin:
         if status_code in status_code_counts:
             status_code_counts[status_code] += 1
 
-            line_count += 1
-            if line_count % 10 == 0:
-                print_statistics()
+        line_count += 1
+        if line_count % 10 == 0:
+            print_statistics()
 
-print statistics()
+
+# Read lines from stdin
+try:
+    for line in sys.stdin:
+        process_line(line)
+except Exception as e:
+    print(f"Error: {e}", file=sys.stderr)
+finally:
+    # Print final statistics
+    print_statistics()
