@@ -19,8 +19,8 @@ def validUTF8(data):
     mask2 = 1 << 6
 
     for byte in data:
-        mask = 1 << 7
         if num_bytes == 0:
+            mask = 1 << 7
             while mask & byte:
                 num_bytes += 1
                 mask >>= 1
@@ -39,9 +39,15 @@ def validUTF8(data):
     return num_bytes == 0
 
 
-# Example
-data_set1 = [197, 130, 1]
-print(validUTF8(data_set1))
+if __name__ == "__main__":
+    data_set1 = [197, 130, 1]
+    print(validUTF8(data_set1))
 
-data_set2 = [235, 140, 4]
-print(validUTF8(data_set2))
+    data_set2 = [235, 140, 4]
+    print(validUTF8(data_set2))
+
+    data_set3 = [240, 162, 138, 147]
+    print(validUTF8(data_set3))
+
+    data_set4 = [255]
+    print(validUTF8(data_set4))
