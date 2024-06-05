@@ -5,21 +5,21 @@ const movieId = process.argv[2];
 const apiUrl = `https://swapi-api.hbtn.io/api/films/${movieId}/`;
 
 request(apiUrl, (error, response, body) => {
-	if (error) {
-	  console.error('Error:', error);
-	  return;
-	}
-	const data = JSON.parse(body);
-	const characters = data.characters;
+  if (error) {
+    console.error('Error:', error);
+    return;
+  }
+  const data = JSON.parse(body);
+  const characters = data.characters;
 
-	characters.forEach((character) => {
-	  request(character, (charError, charResponse, charBody) => {
-            if (charError) {
-	      console.error('Error:', charError);
-	      return;
-            }
-	    const charData = JSON.parse(charBody);
-	    console.log(charData.name);
-          });
-	});
-      });
+  characters.forEach((character) => {
+    request(character, (charError, charResponse, charBody) => {
+      if (charError) {
+        console.error('Error:', charError);
+        return;
+      }
+      const charData = JSON.parse(charBody);
+      console.log(charData.name);
+    });
+  });
+});
