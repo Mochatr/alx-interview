@@ -38,7 +38,7 @@ request(apiUrl, (error, response, body) => {
 
     Promise.all(characterPromises)
       .then((names) => {
-	names.forEach((name) => {
+        names.forEach((name) => {
           console.log(name);
         });
       })
