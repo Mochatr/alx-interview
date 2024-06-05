@@ -23,16 +23,28 @@ request(apiUrl, (error, response, body) => {
     }
 
     const characters = data.characters;
-    characters.forEach((character) => {
-      request(character, (charError, charResponse, charBody) => {
-        if (charError) {
-          console.error('Error:', charError);
-          return;
-        }
-        const charData = JSON.parse(charBody);
-        console.log(charData.name);
+    const characterPromises = characters.map((character) => {
+      return new Promise((resolve, reject) => {
+        request(character, (charError, charResponse, charBody) => {
+          if (charError) {
+            reject(charError);
+            return;
+          }
+          const charData = JSON.parse(charBody);
+          resolve(charData.name);
+        });
       });
     });
+
+    Promise.all(characterPromises)
+      .then((names) => {
+	names.forEach((name) => {
+          console.log(name);
+        });
+      })
+      .catch((err) => {
+        console.error('Error:', err);
+      });
   } catch (parseError) {
     console.error('Error parsing JSON:', parseError);
   }
