@@ -1,28 +1,32 @@
 #!/usr/bin/python3
-"""Define Function"""
+"""
+Island Perimeter module.
+"""
 
 
 def island_perimeter(grid):
-    """returns the perimeter of the island described in grid"""
+    """returns the perimeter of the island described in grid
+
+    Args:
+        grid (nested list of int): The grid representing the map.
+
+    Returns:
+        int: The perimeter of the island.
+    """
+    rows = len(grid)
+    columns = len(grid[0])
     perimeter = 0
-    grid_height = len(grid)
-    grid_width = len(grid[0])
 
-    for i, row in enumerate(grid):
-        for j, is_land in enumerate(row):
-            if is_land:
-                perimeter += 4
-
-                if (j + 1) < grid_width and grid[i][j + 1]:
-                    perimeter -= 1
-
-                if (j - 1) >= 0 and grid[i][j - 1]:
-                    perimeter -= 1
-
-                if (j + 1) < grid_height and grid[i + 1][j]:
-                    perimeter -= 1
-
-                if (j - 1) >= 0 and grid[i - 1][j]:
-                    perimeter -= 1
-
+    for i in range(rows):
+        for j in range(columns):
+            if grid[i][j] == 1:
+                # Verify all four directions
+                if i == 0 or grid[i - 1][j] == 0:
+                    perimeter += 1
+                if i == rows - 1 or grid[i + 1][j] == 0:
+                    perimeter += 1
+                if j == 0 or grid[i][j - 1] == 0:
+                    perimeter += 1
+                if j == columns - 1 or grid[i][j + 1] == 0:
+                    perimeter += 1
     return perimeter
